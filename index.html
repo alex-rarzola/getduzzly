@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duzzly — Controla tus suscripciones, sin sorpresas</title>
+<meta name="description" content="Duzzly te muestra cuánto gastas en suscripciones y te avisa antes de cada cobro. Privado, sin conectar tu banco. Escanea la pantalla de Ajustes y da de alta todas de golpe. Para iPhone.">
+<meta property="og:title" content="Duzzly — Controla tus suscripciones">
+<meta property="og:description" content="Descubre cuánto gastas al mes y no vuelvas a pagar una suscripción olvidada. Privado, para iPhone.">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --brand:#5B4BE0; --brand2:#7C6CFF; --dark:#3F2FB8; --gold:#F0BC1E;
+    --ink:#191627; --muted:#6C6A80; --bg:#FbFBFF; --card:#fff; --line:#ECEBF5;
+    --green:#1FB877; --red:#FF4D4F;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif; color:var(--ink); background:var(--bg); line-height:1.55;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 22px;}
+  .btn{display:inline-flex; align-items:center; gap:8px; font-weight:700; border-radius:14px; padding:14px 22px; cursor:pointer; border:none; font-size:15px;}
+  .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; box-shadow:0 12px 26px rgba(91,75,224,.32);}
+  .btn-ghost{background:#EDEBFB; color:var(--brand);}
+  .btn small{font-weight:500; opacity:.85; font-size:12px;}
+  .soon{display:inline-flex; align-items:center; gap:8px; font-weight:700; border-radius:14px; padding:14px 20px; background:#F0EFF7; color:var(--muted); font-size:15px;}
+
+  /* header */
+  header{position:sticky; top:0; z-index:50; background:rgba(251,251,255,.82); backdrop-filter:blur(14px); border-bottom:1px solid var(--line);}
+  .nav{display:flex; align-items:center; justify-content:space-between; height:66px;}
+  .logo{display:flex; align-items:center; gap:10px; font-weight:800; font-size:19px; letter-spacing:-.3px;}
+  .logo .mark{width:34px; height:34px; border-radius:9px;}
+  .nav-links{display:flex; gap:26px; align-items:center; font-size:15px; font-weight:600; color:#4a4860;}
+  .nav-links a:hover{color:var(--brand);}
+  .nav-cta{background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; padding:9px 16px; border-radius:11px; font-weight:700;}
+  @media(max-width:760px){ .nav-links{display:none;} }
+
+  /* hero */
+  .hero{padding:70px 0 40px; display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center;}
+  .hero h1{font-size:48px; line-height:1.08; letter-spacing:-1.4px; font-weight:850;}
+  .hero h1 .g{background:linear-gradient(120deg,var(--brand),var(--brand2)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .hero p.sub{font-size:19px; color:#4a4860; margin-top:18px; max-width:520px;}
+  .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:28px; align-items:center;}
+  .hero .avail{margin-top:18px; font-size:14px; color:var(--muted);}
+  .hero .avail b{color:var(--ink);}
+  @media(max-width:860px){ .hero{grid-template-columns:1fr; padding:44px 0 20px;} .hero h1{font-size:38px;} .phone-wrap{margin:0 auto;} }
+
+  /* phone mockup */
+  .phone-wrap{display:flex; justify-content:center;}
+  .phone{width:300px; height:620px; background:#F2F2F7; border-radius:44px; box-shadow:0 30px 70px rgba(60,40,140,.28), 0 0 0 10px #0d0d16, 0 0 0 12px #26263a; position:relative; overflow:hidden;}
+  .ph-status{height:44px; display:flex; align-items:flex-end; justify-content:space-between; padding:0 26px 6px; font-size:12px; font-weight:600;}
+  .ph-body{padding:6px 16px;}
+  .ph-title{font-size:24px; font-weight:800; letter-spacing:-.5px; margin:6px 4px 2px;}
+  .ph-sub{font-size:11px; color:var(--muted); margin:0 4px 12px;}
+  .ph-hero{background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; border-radius:18px; padding:16px; box-shadow:0 12px 24px rgba(91,75,224,.32);}
+  .ph-hero .l{font-size:10px; opacity:.85; letter-spacing:.4px;}
+  .ph-hero .big{font-size:30px; font-weight:800; letter-spacing:-1px;}
+  .ph-hero .chip{display:inline-flex; align-items:center; gap:4px; background:rgba(255,255,255,.2); font-size:9px; font-weight:600; padding:4px 8px; border-radius:20px; margin-top:10px;}
+  .ph-row{display:flex; align-items:center; gap:10px; background:#fff; border-radius:13px; padding:10px; margin-top:9px;}
+  .ph-ic{width:34px; height:34px; border-radius:9px; color:#fff; font-weight:700; display:flex; align-items:center; justify-content:center; font-size:15px;}
+  .ph-row .nm{flex:1;} .ph-row .nm b{font-size:12.5px; display:block;} .ph-row .nm span{font-size:10px; color:var(--muted);}
+  .ph-row .am{font-size:12.5px; font-weight:700;}
+  .ph-due{font-size:9px; font-weight:700; padding:2px 6px; border-radius:7px; background:#FFF1F0; color:var(--red);}
+  .ph-due.ok{background:#EAF8F1; color:var(--green);}
+
+  /* sections */
+  section{padding:56px 0;}
+  .sec-tag{text-align:center; color:var(--brand); font-weight:800; letter-spacing:1.5px; font-size:12px; text-transform:uppercase;}
+  h2{font-size:34px; letter-spacing:-.8px; font-weight:850; text-align:center; margin-top:8px;}
+  .sec-lead{text-align:center; color:#4a4860; font-size:17px; margin:12px auto 0; max-width:600px;}
+
+  /* interactive */
+  .calc{background:var(--card); border:1px solid var(--line); border-radius:26px; padding:28px; margin-top:34px; box-shadow:0 20px 50px rgba(60,40,140,.08);}
+  .calc-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:26px; align-items:center;}
+  @media(max-width:760px){ .calc-grid{grid-template-columns:1fr;} }
+  .chips{display:flex; flex-wrap:wrap; gap:10px;}
+  .chip-btn{display:flex; align-items:center; gap:8px; background:#fff; border:2px solid var(--line); border-radius:15px; padding:9px 13px; cursor:pointer; font-weight:600; font-size:14px; transition:.12s;}
+  .chip-btn .d{width:24px; height:24px; border-radius:7px; color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;}
+  .chip-btn .pp{color:var(--muted); font-weight:500; font-size:12px;}
+  .chip-btn.on{border-color:var(--brand); background:#F6F4FF;}
+  .chip-btn.on .ck{color:var(--green); font-weight:800;}
+  .calc-out{background:linear-gradient(160deg,var(--brand),var(--dark)); color:#fff; border-radius:20px; padding:26px; text-align:center;}
+  .calc-out .l{font-size:13px; opacity:.85;}
+  .calc-out .m{font-size:46px; font-weight:850; letter-spacing:-1.5px; margin:2px 0;}
+  .calc-out .y{font-size:14px; opacity:.9;}
+  .calc-out .note{font-size:12px; opacity:.8; margin-top:16px; border-top:1px solid rgba(255,255,255,.2); padding-top:14px;}
+
+  /* features */
+  .feat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:38px;}
+  @media(max-width:860px){ .feat-grid{grid-template-columns:1fr 1fr;} }
+  @media(max-width:560px){ .feat-grid{grid-template-columns:1fr;} }
+  .feat{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:24px;}
+  .feat .ico{width:46px; height:46px; border-radius:13px; background:#F6F4FF; color:var(--brand); display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:14px;}
+  .feat h3{font-size:17px; font-weight:750; margin-bottom:6px;}
+  .feat p{font-size:14.5px; color:#4a4860;}
+
+  /* gallery */
+  .gallery{display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-top:36px;}
+  .shot{width:220px; height:440px; border-radius:32px; background:#F2F2F7; border:1px dashed #cfcde4; display:flex; align-items:center; justify-content:center; text-align:center; color:var(--muted); font-size:13px; padding:20px; box-shadow:0 14px 30px rgba(60,40,140,.1);}
+
+  /* pricing */
+  .price-wrap{background:linear-gradient(160deg,#211a45,#100d24); color:#fff; border-radius:30px; padding:48px 30px; margin-top:36px; text-align:center;}
+  .price-wrap h2{color:#fff;}
+  .price-wrap .lead{color:#c9c6e8; max-width:560px; margin:12px auto 0;}
+  .plans{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:32px;}
+  .plan{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:20px; padding:24px; width:230px; text-align:left;}
+  .plan.best{border-color:var(--gold);}
+  .plan .badge{display:inline-block; background:var(--gold); color:#3a2c00; font-size:11px; font-weight:800; padding:3px 9px; border-radius:8px; margin-bottom:10px;}
+  .plan .pn{font-size:15px; font-weight:700;}
+  .plan .pp{font-size:30px; font-weight:850; letter-spacing:-1px; margin:4px 0;}
+  .plan .pp small{font-size:14px; font-weight:600; color:#b8b4dc;}
+  .plan .pd{font-size:13px; color:#b8b4dc;}
+  .price-note{color:#9d9ac0; font-size:13px; margin-top:22px;}
+
+  /* privacy strip */
+  .privacy{display:flex; gap:16px; align-items:center; justify-content:center; background:#F6F4FF; border:1px solid var(--line); border-radius:20px; padding:24px; margin-top:20px; text-align:center; flex-direction:column;}
+  .privacy .e{font-size:30px;}
+  .privacy h3{font-size:20px; font-weight:800;}
+  .privacy p{color:#4a4860; max-width:560px;}
+
+  /* footer */
+  footer{border-top:1px solid var(--line); padding:40px 0; margin-top:30px;}
+  .foot{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+  .foot-links{display:flex; gap:20px; font-size:14px; color:#4a4860; font-weight:600; flex-wrap:wrap;}
+  .foot-links a:hover{color:var(--brand);}
+  .copy{color:var(--muted); font-size:13px; margin-top:14px; text-align:center;}
+  .cta-center{text-align:center; margin-top:14px;}
+</style>
+</head>
+<body>
+
+<!-- Ícono de Duzzly reutilizable (SVG inline) -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="duz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C6CFF"/><stop offset="1" stop-color="#3F2FB8"/></linearGradient>
+  <symbol id="duzzly-icon" viewBox="0 0 100 100">
+    <rect width="100" height="100" rx="22" fill="url(#duz)"/>
+    <rect x="32" y="20" width="36" height="27" rx="4.5" fill="none" stroke="#fff" stroke-width="4"/>
+    <line x1="32" y1="29" x2="68" y2="29" stroke="#fff" stroke-width="4"/>
+    <line x1="42" y1="16.5" x2="42" y2="24" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    <line x1="58" y1="16.5" x2="58" y2="24" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="50" cy="38.5" r="3.4" fill="#F0BC1E"/>
+    <g fill="#F0BC1E">
+      <rect x="24" y="76" width="8" height="12" rx="2.5"/><rect x="35" y="71" width="8" height="17" rx="2.5"/>
+      <rect x="46" y="64" width="8" height="24" rx="2.5"/><rect x="57" y="69" width="8" height="19" rx="2.5"/>
+      <rect x="68" y="60" width="8" height="28" rx="2.5"/>
+    </g>
+  </symbol>
+</defs></svg>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo"><svg class="mark" viewBox="0 0 100 100"><use href="#duzzly-icon"/></svg> Duzzly</div>
+    <nav class="nav-links">
+      <a href="#demo">Pruébalo</a>
+      <a href="#funciones">Funciones</a>
+      <a href="#precios">Premium</a>
+      <a href="privacy.html">Privacidad</a>
+      <a href="#descargar" class="nav-cta">Descargar</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="wrap hero" id="descargar" style="padding-top:56px;">
+  <div>
+    <h1>Nunca más pagues una <span class="g">suscripción olvidada</span></h1>
+    <p class="sub">Duzzly te muestra cuánto gastas de verdad al mes y te avisa antes de cada cobro. Escanea la pantalla de Ajustes y da de alta todas tus suscripciones de golpe. Privado, sin conectar tu banco.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#" id="appstore">Descargar en la <b style="margin-left:2px;">App Store</b></a>
+      <a class="soon">Pronto en <b>Android</b></a>
+    </div>
+    <div class="avail">Para iPhone · <b>Prueba gratis 7 días</b> · Privado, todo en tu dispositivo</div>
+  </div>
+
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="ph-status"><span>9:41</span><span>5G ▮▮ 100%</span></div>
+      <div class="ph-body">
+        <div class="ph-title">Hola, Alejandro</div>
+        <div class="ph-sub">Esto es lo que gastas en suscripciones</div>
+        <div class="ph-hero">
+          <div class="l">GASTO MENSUAL</div>
+          <div class="big">$47.46</div>
+          <div class="chip">🔒 100% privado · sin conectar tu banco</div>
+        </div>
+        <div class="ph-row"><div class="ph-ic" style="background:#E50914">N</div><div class="nm"><b>Netflix</b><span>Streaming</span></div><div class="am">$15.49</div><div class="ph-due">en 2d</div></div>
+        <div class="ph-row"><div class="ph-ic" style="background:#1DB954">S</div><div class="nm"><b>Spotify</b><span>Música</span></div><div class="am">$10.99</div><div class="ph-due ok">en 9d</div></div>
+        <div class="ph-row"><div class="ph-ic" style="background:#10A37F">C</div><div class="nm"><b>ChatGPT</b><span>IA</span></div><div class="am">$20.00</div><div class="ph-due ok">en 12d</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO INTERACTIVA -->
+<section class="wrap" id="demo">
+  <div class="sec-tag">Pruébalo</div>
+  <h2>¿Cuánto gastas al mes en suscripciones?</h2>
+  <p class="sec-lead">Toca las que pagas y mira el total en vivo. Así de fácil es descubrirlo en la app.</p>
+  <div class="calc">
+    <div class="calc-grid">
+      <div class="chips" id="chips"></div>
+      <div class="calc-out">
+        <div class="l">Gastas al mes</div>
+        <div class="m" id="calc-month">$0</div>
+        <div class="y">= <b id="calc-year">$0</b> al año en <span id="calc-count">0</span> suscripciones</div>
+        <div class="note">El 42% de la gente paga suscripciones que ya olvidó. Duzzly te avisa antes de cada cobro.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUNCIONES -->
+<section class="wrap" id="funciones">
+  <div class="sec-tag">Funciones</div>
+  <h2>Todo bajo control, en un toque</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="ico">📸</div><h3>Alta automática</h3><p>Escanea la pantalla de Ajustes ▸ Suscripciones o un correo de cobro y da de alta todas tus suscripciones de golpe.</p></div>
+    <div class="feat"><div class="ico">🔔</div><h3>Nunca un cobro sorpresa</h3><p>Te avisamos antes de cada renovación, los días que tú elijas, para que canceles a tiempo si ya no la usas.</p></div>
+    <div class="feat"><div class="ico">📊</div><h3>Analíticas de tu gasto</h3><p>Mira a dónde se va tu dinero por categoría, tus suscripciones más caras y tu proyección anual.</p></div>
+    <div class="feat"><div class="ico">🔒</div><h3>100% privado</h3><p>Todo se queda en tu iPhone. No conectamos tu banco ni recopilamos tus datos. Nunca.</p></div>
+    <div class="feat"><div class="ico">🌎</div><h3>Tu moneda</h3><p>Registra cada suscripción en su moneda (USD, MXN, EUR y más) y ve el total convertido a la tuya.</p></div>
+    <div class="feat"><div class="ico">📱</div><h3>Widget, Face ID e iCloud</h3><p>Tu próximo cobro en la pantalla de inicio, bloqueo con Face ID y sincronización privada entre tus dispositivos.</p></div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section class="wrap">
+  <div class="sec-tag">Así se ve</div>
+  <h2>Diseñada para ser clarísima</h2>
+  <p class="sec-lead">Agrega tus capturas reales: home.png · analytics.png · scan.png</p>
+  <div class="gallery">
+    <div class="shot">Tu captura de<br><b>Inicio</b><br>(home.png)</div>
+    <div class="shot">Tu captura de<br><b>Analíticas</b><br>(analytics.png)</div>
+    <div class="shot">Tu captura de<br><b>Escanear</b><br>(scan.png)</div>
+  </div>
+</section>
+
+<!-- PRECIOS -->
+<section class="wrap" id="precios">
+  <div class="price-wrap">
+    <div class="sec-tag" style="color:var(--gold)">Duzzly Premium</div>
+    <h2>Empieza gratis, sigue si te sirve</h2>
+    <p class="lead">7 días de prueba gratis. Después elige el plan que te acomode — o paga una sola vez y quédatelo para siempre.</p>
+    <div class="plans">
+      <div class="plan best">
+        <span class="badge">AHORRA 44%</span>
+        <div class="pn">Anual</div>
+        <div class="pp">$19.99<small> /año</small></div>
+        <div class="pd">7 días gratis · el más elegido</div>
+      </div>
+      <div class="plan">
+        <div class="pn">Mensual</div>
+        <div class="pp">$2.99<small> /mes</small></div>
+        <div class="pd">7 días gratis · flexible</div>
+      </div>
+      <div class="plan">
+        <div class="pn">Pago único</div>
+        <div class="pp">$29.99</div>
+        <div class="pd">De por vida · sin suscripción</div>
+      </div>
+    </div>
+    <div class="price-note">Suscripciones ilimitadas, escaneo con IA, recordatorios, analíticas y sincronización iCloud.</div>
+    <div class="cta-center"><a class="btn btn-primary" href="#" style="margin-top:24px;">Descargar en la <b style="margin-left:2px;">App Store</b></a></div>
+  </div>
+</section>
+
+<!-- PRIVACIDAD -->
+<section class="wrap">
+  <div class="privacy">
+    <div class="e">🔒</div>
+    <h3>Tu dinero es asunto tuyo</h3>
+    <p>A diferencia de otras apps, Duzzly <b>no conecta tu banco</b> ni sube tus movimientos a ningún servidor. Tus suscripciones viven en tu dispositivo y, si quieres, en tu iCloud privado. Nada de recopilar ni vender datos.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="logo"><svg class="mark" viewBox="0 0 100 100"><use href="#duzzly-icon"/></svg> Duzzly</div>
+      <div class="foot-links">
+        <a href="#funciones">Funciones</a>
+        <a href="#precios">Premium</a>
+        <a href="privacy.html">Política de Privacidad</a>
+        <a href="terms.html">Términos</a>
+        <a href="mailto:arzo.labs.mx@gmail.com">Contacto</a>
+      </div>
+    </div>
+    <div class="copy">© 2026 Duzzly. Hecho para que nunca pagues de más. · De la familia de <a href="https://getnozzly.com" style="color:var(--brand); font-weight:600;">Nozzly</a></div>
+  </div>
+</footer>
+
+<script>
+  const catalog = [
+    {name:'Netflix', amt:15.49, color:'#E50914'},
+    {name:'Spotify', amt:10.99, color:'#1DB954'},
+    {name:'ChatGPT Plus', amt:20.00, color:'#10A37F'},
+    {name:'Disney+', amt:13.99, color:'#5B4BE0'},
+    {name:'YouTube Premium', amt:13.99, color:'#FF2D55'},
+    {name:'iCloud+', amt:2.99, color:'#00A8E1'},
+    {name:'HBO Max', amt:9.99, color:'#7C6CFF'},
+    {name:'Gimnasio', amt:39.00, color:'#FF6B35'},
+  ];
+  const selected = new Set();
+  const chipsEl = document.getElementById('chips');
+  const fmt = n => '$'+Math.round(n).toLocaleString('en-US');
+
+  catalog.forEach((c,i)=>{
+    const el = document.createElement('div');
+    el.className='chip-btn';
+    el.innerHTML = `<div class="d" style="background:${c.color}">${c.name[0]}</div>
+      <div>${c.name}<div class="pp">$${c.amt.toFixed(2)}/mes</div></div><span class="ck"></span>`;
+    el.onclick = ()=>{
+      if(selected.has(i)){ selected.delete(i); el.classList.remove('on'); el.querySelector('.ck').textContent=''; }
+      else{ selected.add(i); el.classList.add('on'); el.querySelector('.ck').textContent='✓'; }
+      update();
+    };
+    chipsEl.appendChild(el);
+  });
+
+  function update(){
+    let m=0; selected.forEach(i=> m+=catalog[i].amt);
+    document.getElementById('calc-month').textContent = fmt(m);
+    document.getElementById('calc-year').textContent = fmt(m*12);
+    document.getElementById('calc-count').textContent = selected.size;
+  }
+  // preselección para que se vea vivo
+  [0,1,2].forEach(i=>{ selected.add(i); chipsEl.children[i].classList.add('on'); chipsEl.children[i].querySelector('.ck').textContent='✓'; });
+  update();
+</script>
+</body>
+</html>

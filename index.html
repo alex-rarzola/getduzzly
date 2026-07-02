@@ -69,7 +69,7 @@
 
   /* sections */
   section{padding:56px 0;}
-  .sec-tag{text-align:center; color:var(--brand); font-weight:800; letter-spacing:1.5px; font-size:12px; text-transform:uppercase;}
+  .sec-tag{text-align:center; color:var(--brand); font-weight:800; letter-spacing:2px; font-size:15px; text-transform:uppercase; margin-bottom:6px;}
   h2{font-size:34px; letter-spacing:-.8px; font-weight:850; text-align:center; margin-top:8px;}
   .sec-lead{text-align:center; color:#4a4860; font-size:17px; margin:12px auto 0; max-width:600px;}
 
@@ -99,8 +99,18 @@
   .feat p{font-size:14.5px; color:#4a4860;}
 
   /* gallery */
-  .gallery{display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-top:36px;}
-  .shot{width:220px; height:440px; border-radius:32px; background:#F2F2F7; border:1px dashed #cfcde4; display:flex; align-items:center; justify-content:center; text-align:center; color:var(--muted); font-size:13px; padding:20px; box-shadow:0 14px 30px rgba(60,40,140,.1);}
+  .gallery{display:flex; gap:22px; justify-content:center; flex-wrap:wrap; margin-top:36px;}
+  .shot-img{width:230px; border-radius:34px; box-shadow:0 18px 44px rgba(60,40,140,.18); display:block;}
+
+  /* móvil */
+  @media(max-width:520px){
+    .hero h1{font-size:33px;}
+    .cta-row{width:100%;}
+    .btn-primary, .soon{width:100%; justify-content:center;}
+    .shot-img{width:70%; max-width:280px;}
+    section{padding:44px 0;}
+    h2{font-size:28px;}
+  }
 
   /* pricing */
   .price-wrap{background:linear-gradient(160deg,#211a45,#100d24); color:#fff; border-radius:30px; padding:48px 30px; margin-top:36px; text-align:center;}
@@ -170,8 +180,7 @@
     <h1>Nunca más pagues una <span class="g">suscripción olvidada</span></h1>
     <p class="sub">Duzzly te muestra cuánto gastas de verdad al mes y te avisa antes de cada cobro. Escanea la pantalla de Ajustes y da de alta todas tus suscripciones de golpe. Privado, sin conectar tu banco.</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="#" id="appstore">Descargar en la <b style="margin-left:2px;">App Store</b></a>
-      <a class="soon">Pronto en <b>Android</b></a>
+      <a class="btn btn-primary" href="#" id="appstore">Descargar en la App Store</a>
     </div>
     <div class="avail">Para iPhone · <b>Prueba gratis 7 días</b> · Privado, todo en tu dispositivo</div>
   </div>
@@ -233,9 +242,9 @@
   <h2>Diseñada para ser clarísima</h2>
   <p class="sec-lead">Agrega tus capturas reales: home.png · analytics.png · scan.png</p>
   <div class="gallery">
-    <div class="shot">Tu captura de<br><b>Inicio</b><br>(home.png)</div>
-    <div class="shot">Tu captura de<br><b>Analíticas</b><br>(analytics.png)</div>
-    <div class="shot">Tu captura de<br><b>Escanear</b><br>(scan.png)</div>
+    <img class="shot-img" src="home.png" alt="Pantalla de inicio de Duzzly" loading="lazy">
+    <img class="shot-img" src="analytics.png" alt="Analíticas de gasto en Duzzly" loading="lazy">
+    <img class="shot-img" src="scan.png" alt="Escaneo de suscripciones en Duzzly" loading="lazy">
   </div>
 </section>
 
@@ -264,7 +273,7 @@
       </div>
     </div>
     <div class="price-note">Suscripciones ilimitadas, escaneo con IA, recordatorios, analíticas y sincronización iCloud.</div>
-    <div class="cta-center"><a class="btn btn-primary" href="#" style="margin-top:24px;">Descargar en la <b style="margin-left:2px;">App Store</b></a></div>
+    <div class="cta-center"><a class="btn btn-primary" href="#" style="margin-top:24px;">Descargar en la App Store</a></div>
   </div>
 </section>
 

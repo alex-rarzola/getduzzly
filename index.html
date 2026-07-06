@@ -20,9 +20,10 @@
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif; color:var(--ink); background:var(--bg); line-height:1.55;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif; color:var(--ink); background:var(--bg); line-height:1.55; overflow-x:hidden;}
   a{color:inherit; text-decoration:none;}
-  .wrap{max-width:1080px; margin:0 auto; padding:0 22px;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+  h1,h2,h3,p{overflow-wrap:break-word;}
   .btn{display:inline-flex; align-items:center; gap:8px; font-weight:700; border-radius:14px; padding:14px 22px; cursor:pointer; border:none; font-size:15px;}
   .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; box-shadow:0 12px 26px rgba(91,75,224,.32);}
   .btn-ghost{background:#EDEBFB; color:var(--brand);}
@@ -41,13 +42,19 @@
 
   /* hero */
   .hero{padding:70px 0 40px; display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center;}
-  .hero h1{font-size:48px; line-height:1.08; letter-spacing:-1.4px; font-weight:850;}
+  .hero h1{font-size:44px; line-height:1.1; letter-spacing:-1.2px; font-weight:850;}
   .hero h1 .g{background:linear-gradient(120deg,var(--brand),var(--brand2)); -webkit-background-clip:text; background-clip:text; color:transparent;}
-  .hero p.sub{font-size:19px; color:#4a4860; margin-top:18px; max-width:520px;}
+  .hero p.sub{font-size:20.5px; color:#4a4860; margin-top:18px; max-width:520px;}
   .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:28px; align-items:center;}
   .hero .avail{margin-top:18px; font-size:14px; color:var(--muted);}
   .hero .avail b{color:var(--ink);}
-  @media(max-width:860px){ .hero{grid-template-columns:1fr; padding:44px 0 64px;} .hero h1{font-size:38px;} .phone-wrap{margin:24px auto 0;} }
+  @media(max-width:860px){
+    .hero{grid-template-columns:1fr; padding:44px 0 64px; text-align:center;}
+    .hero h1{font-size:34px;}
+    .hero p.sub{margin-left:auto; margin-right:auto;}
+    .cta-row{justify-content:center;}
+    .phone-wrap{margin:24px auto 0;}
+  }
 
   /* phone mockup */
   .phone-wrap{display:flex; justify-content:center;}
@@ -68,10 +75,10 @@
   .ph-due.ok{background:#EAF8F1; color:var(--green);}
 
   /* sections */
-  section{padding:80px 0;}
+  section{padding:96px 0;}
   .sec-tag{text-align:center; color:var(--brand); font-weight:800; letter-spacing:2px; font-size:15px; text-transform:uppercase; margin-bottom:6px;}
   h2{font-size:34px; letter-spacing:-.8px; font-weight:850; text-align:center; margin-top:8px;}
-  .sec-lead{text-align:center; color:#4a4860; font-size:17px; margin:12px auto 0; max-width:600px;}
+  .sec-lead{text-align:center; color:#4a4860; font-size:18.5px; margin:14px auto 0; max-width:600px;}
 
   /* interactive */
   .calc{background:var(--card); border:1px solid var(--line); border-radius:26px; padding:28px; margin-top:34px; box-shadow:0 20px 50px rgba(60,40,140,.08);}
@@ -104,12 +111,15 @@
 
   /* móvil */
   @media(max-width:520px){
-    .hero h1{font-size:33px;}
+    .wrap{padding:0 28px;}
+    .hero h1{font-size:30px; letter-spacing:-1px;}
+    .hero p.sub{font-size:18px;}
+    .sec-lead{font-size:17px;}
     .cta-row{width:100%;}
     .btn-primary, .soon{width:100%; justify-content:center;}
     .shot-img{width:70%; max-width:280px;}
-    section{padding:56px 0;}
-    h2{font-size:28px;}
+    section{padding:72px 0;}
+    h2{font-size:25px;}
   }
 
   /* pricing */
@@ -180,7 +190,7 @@
     <h1>Nunca más pagues una <span class="g">suscripción olvidada</span></h1>
     <p class="sub">Duzzly te muestra cuánto gastas de verdad al mes y te avisa antes de cada cobro. Escanea la pantalla de Ajustes y da de alta todas tus suscripciones de golpe. Privado, sin conectar tu banco.</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="#" id="appstore">Descargar en la App Store</a>
+      <a class="btn btn-primary" href="https://apps.apple.com/app/duzzly/id6786425416" id="appstore" target="_blank" rel="noopener">Descargar en la App Store</a>
     </div>
     <div class="avail">Para iPhone · <b>Prueba gratis 7 días</b> · Privado, todo en tu dispositivo</div>
   </div>
@@ -273,7 +283,7 @@
       </div>
     </div>
     <div class="price-note">Suscripciones ilimitadas, escaneo con IA, recordatorios, analíticas y sincronización iCloud.</div>
-    <div class="cta-center"><a class="btn btn-primary" href="#" style="margin-top:24px;">Descargar en la App Store</a></div>
+    <div class="cta-center"><a class="btn btn-primary" href="https://apps.apple.com/app/duzzly/id6786425416" target="_blank" rel="noopener" style="margin-top:24px;">Descargar en la App Store</a></div>
   </div>
 </section>
 
